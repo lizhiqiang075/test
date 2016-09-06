@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = "";
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>讯格售后综合平台</title>
+    <link href="Content/css/style.css" rel="stylesheet" />
+    <script language="JavaScript" src="Scripts/jquery-1.8.2.js"></script>
+
+
+    <script language="javascript">
+        $(function () {
+            $('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
+            $(window).resize(function () {
+                $('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
+            })
+        });
+        function hb_login() {
+            var user = $("#login_user").val();
+            var pwd = $("#login_pwd").val();
+            if (user == "" || user == null) {
+                alert("请输入用户名");
+                $("#login111").hideLoading();
+            }
+            if (pwd == "" || pwd == null) {
+                alert("请输入密码");
+            }
+            $.ajax({
+                type: "post",
+                dataType: 'json',
+                timeout: 1000,
+                cache: false,
+                url: "/Login/relogin",
+                data: { "User": user, "Password": pwd },             //参数要对应
+                success: function (result) {
+                    if (result) {
+                        if (result.result == "true") {
+                            document.cookie = "LoginUser=" + user;
+                            javascript: window.location = '/Home/index';
+                        } else {
+                            alert("用户名或密码错误！");
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+</head>
+
+<body style="background-color:#1c77ac; background-image:url(images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;" id="login111">
+
+
+    <div id="mainBody">
+        <div id="cloud1" class="cloud"></div>
+        <div id="cloud2" class="cloud"></div>
+    </div>
+
+
+    <div class="logintop">
+        <span></span>
+        <ul>
+            <li><a href="#">回首页</a></li>
+            <li><a href="#">帮助</a></li>
+            <li><a href="#">关于</a></li>
+        </ul>
+    </div>
+
+    <div class="loginbody">
+
+        <span></span>
+
+        <div class="loginbox" style="top:150px">
+
+            <ul>
+                <li><input name="" id="login_user" type="text" class="loginuser" onclick="JavaScript:this.value=''" /></li>
+                <li><input name="" id="login_pwd" type="password" class="loginpwd" onclick="JavaScript:this.value=''" /></li>
+                <li>
+                    <input name="" type="button" class="loginbtn" style="width: 111px" value="登录" onclick="hb_login()" />
+                    <label>&nbsp;</label><input name="" type="button" style="width: 111px" class="loginbtn" value="注册" onclick="javascript:window.location='register.html'" /><label><a href="#">忘记密码？</a></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="loginbm">讯格售后综合平台&nbsp;&nbsp;&nbsp;项目部</div>
+</body>
+</html>
